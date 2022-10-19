@@ -43,7 +43,57 @@ public class LEDClient {
         this.zsocket.close();
         this.zctx.close();
     }
+    public static void meMethod() throws InterruptedException {
+        LEDClient rainbowness = new LEDClient("tcp", "192.168.1.116", 5001);
+//        ledClient.blinkN(blue, 5, 1000);
+//        ledClient.close();
 
+        int[] color = {0,0,0};
+        while (color[0] != 255 || color[1] != 255 || color[2] != 255){
+            if (color[0] != 255) {
+                color[0]++;
+            }else if (color[1] != 255) {
+                color[1]++;
+            }else if (color[2] != 255) {
+                color[2]++;
+            }
+            rainbowness.send(color);
+            TimeUnit.MILLISECONDS.sleep(10);
+
+        }
+
+        while (color[0] != 0 || color[1] != 0 || color[2] != 0){
+            if (color[0] != 0) {
+                color[0]--;
+            }else if (color[1] != 0) {
+                color[1]--;
+            }else if (color[2] != 0) {
+                color[2]--;
+            }
+            rainbowness.send(color);
+            TimeUnit.MILLISECONDS.sleep(10);
+
+        }
+
+    }
+
+    public static void main(String[] args) {
+//        LEDClient ledClient = new LEDClient("tcp", "192.168.1.117", 5001);
+        try {
+//            int[] color = {0, 0, 255};
+//            ledClient.blinkN(color, 5, 1000);
+//            ledClient.close();
+              meMethod();
+
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+}
+
+
+/*
     public static void main(String[] args) {
         LEDClient ledClient = new LEDClient("tcp", "192.168.86.250", 5001);
         try {
@@ -53,5 +103,6 @@ public class LEDClient {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+
     }
-}
+ */
